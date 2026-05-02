@@ -15,21 +15,21 @@
 
             {{-- Stat Cards --}}
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div class="bg-white rounded-2xl border border-gray-200 p-4 border-b-gray-500 border-b-4 text-center">
                     <p class="text-xs text-gray-500 uppercase tracking-wide">Assigned Jobs</p>
                     <p class="text-3xl font-bold text-gray-800 mt-1">{{ $activeJobs->count() }}</p>
                 </div>
-                <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div class="bg-white rounded-2xl border border-gray-200 p-4 border-b-yellow-500 border-b-4 text-center">
                     <p class="text-xs text-gray-500 uppercase tracking-wide">Pending</p>
                     <p class="text-3xl font-bold text-yellow-500 mt-1">{{ $activeJobs->where('status', 'pending')->count() }}</p>
                     <p class="text-xs text-gray-400 mt-1">Awaiting arrival</p>
                 </div>
-                <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div class="bg-white rounded-2xl border border-gray-200 p-4 border-b-blue-500 border-b-4 text-center">
                     <p class="text-xs text-gray-500 uppercase tracking-wide">Received</p>
                     <p class="text-3xl font-bold text-blue-500 mt-1">{{ $activeJobs->where('status', 'in_shop')->count() }}</p>
                     <p class="text-xs text-gray-400 mt-1">Cars in shop queue</p>
                 </div>
-                <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+                <div class="bg-white rounded-2xl border border-gray-200 p-4 border-b-orange-500 border-b-4 text-center">
                     <p class="text-xs text-gray-500 uppercase tracking-wide">In Progress</p>
                     <p class="text-3xl font-bold text-orange-500 mt-1">{{ $activeJobs->where('status', 'in_progress')->count() }}</p>
                     <p class="text-xs text-gray-400 mt-1">Currently working</p>

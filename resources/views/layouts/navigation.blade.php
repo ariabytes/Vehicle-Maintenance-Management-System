@@ -4,8 +4,11 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}" class="font-black text-lg tracking-tight text-gray-800">
-                        VM<span class="text-blue-600">M</span><span class="font-black text-lg tracking-tight text-gray-800">S</span>
+                    <a href="{{ 
+                        auth()->user()->isAdmin() ? route('admin.dashboard') : 
+                        (auth()->user()->isDriver() ? route('driver.dashboard') : route('mechanic.dashboard')) 
+                    }}" class="font-black text-lg tracking-tight text-gray-800">
+                        VM<span class="text-blue-600">M</span>S
                     </a>
                 </div>
 
@@ -20,8 +23,9 @@
                             <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports</x-nav-link>
                             <x-nav-link :href="route('admin.jobs.index')" :active="request()->routeIs('admin.jobs.*')">Jobs</x-nav-link>
                             <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">Accounts</x-nav-link>
+                            <x-nav-link :href="route('admin.maintenance-history')" :active="request()->routeIs('admin.maintenance-history')">History</x-responsive-nav-link>
                             <x-nav-link :href="route('admin.reports-overview.index')" :active="request()->routeIs('admin.reports-overview.*')">Generate Reports</x-nav-link>
-                        @elseif(auth()->user()->isDriver())
+                            @elseif(auth()->user()->isDriver())
                             <x-nav-link :href="route('driver.dashboard')" :active="request()->routeIs('driver.dashboard')">Dashboard</x-nav-link>
                             <x-nav-link :href="route('driver.reports.index')" :active="request()->routeIs('driver.reports.*')">My Reports</x-nav-link>
                             <x-nav-link :href="route('driver.maintenance-history')" :active="request()->routeIs('driver.maintenance-history')">History</x-nav-link>
@@ -78,17 +82,21 @@
                 @if(auth()->user()->isAdmin())
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.vehicles.index')" :active="request()->routeIs('admin.vehicles.*')">Vehicles</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.maintenance-types.index')" :active="request()->routeIs('admin.maintenance-types.*')">Maintenance Types</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.schedules.index')" :active="request()->routeIs('admin.schedules.*')">PMS Schedules</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.jobs.index')" :active="request()->routeIs('admin.jobs.*')">Jobs</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">Accounts</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.reports-overview.index')" :active="request()->routeIs('admin.reports-overview.*')">Generate Reports</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.maintenance-history')" :active="request()->routeIs('admin.maintenance-history')">History</x-responsive-nav-link>
                 @elseif(auth()->user()->isDriver())
-                    <x-nav-link :href="route('driver.dashboard')" :active="request()->routeIs('driver.dashboard')">Dashboard</x-nav-link>
-                    <x-nav-link :href="route('driver.reports.index')" :active="request()->routeIs('driver.reports.*')">My Reports</x-nav-link>
-                    <x-nav-link :href="route('driver.maintenance-history')" :active="request()->routeIs('driver.maintenance-history')">History</x-nav-link>
+                    <x-responsive-nav-link :href="route('driver.dashboard')" :active="request()->routeIs('driver.dashboard')">Dashboard</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('driver.reports.index')" :active="request()->routeIs('driver.reports.*')">My Reports</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('driver.maintenance-history')" :active="request()->routeIs('driver.maintenance-history')">History</x-responsive-nav-link>
                 @elseif(auth()->user()->isMechanic())
                     <x-responsive-nav-link :href="route('mechanic.dashboard')" :active="request()->routeIs('mechanic.dashboard')">Dashboard</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('mechanic.jobs.index')" :active="request()->routeIs('mechanic.jobs.*')">My Jobs</x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('mechanic.maintenance-history')" :active="request()->routeIs('mechanic.maintenance-history')">History</x-responsive-nav-link>
                 @endif
             @endauth
         </div>

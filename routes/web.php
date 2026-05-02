@@ -58,7 +58,7 @@ Route::middleware(['auth', 'role:admin'])
             ->name('users.toggle-status');
 
         // Vehicle management 
-        Route::resource('vehicles', AdminVehicleController::class)->except(['destroy']);
+        Route::resource('vehicles', AdminVehicleController::class)->only(['index', 'create', 'store', 'edit', 'update']);
         Route::patch('vehicles/{vehicle}/archive', [AdminVehicleController::class, 'archive'])
             ->name('vehicles.archive');
         Route::patch('vehicles/{vehicle}/restore', [AdminVehicleController::class, 'restore'])

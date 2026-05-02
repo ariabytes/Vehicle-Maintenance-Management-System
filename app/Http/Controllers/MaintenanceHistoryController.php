@@ -21,16 +21,12 @@ class MaintenanceHistoryController extends Controller
             ->where('status', 'done');
 
         if ($user->isDriver()) {
-            // Only vehicles assigned to this driver
             $vehicleIds = $user->vehicles()->pluck('id');
             $query->whereIn('vehicle_id', $vehicleIds);
         } elseif ($user->isMechanic()) {
-            // Only jobs this mechanic worked on
             $query->where('mechanic_id', $user->id);
         }
-        // Admin: no extra scope — sees everything
 
-        // Optional filters available to all roles
         $query
             ->when($request->vehicle_id, fn($q, $id) => $q->where('vehicle_id', $id))
             ->when($request->from, fn($q, $d) => $q->whereDate('completed_at', '>=', $d))

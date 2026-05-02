@@ -53,28 +53,35 @@ class MaintenanceScheduleController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'vehicle_id'          => 'required|exists:vehicles,id',
-            'maintenance_type_id' => [
-                'required',
-                'exists:maintenance_types,id',
-                \Illuminate\Validation\Rule::unique('maintenance_schedules')
-                    ->where('vehicle_id', $request->vehicle_id),
-            ],
-            'last_service_odo'    => 'required|integer|min:0',
-            'last_service_date'   => 'nullable|date',
-            'interval_km'         => 'required|integer|min:1',
-            'notes'               => 'nullable|string|max:1000',
+        $request->validate([
+            'vehicle_id'                      => 'required|exists:vehicles,id',
+            'schedules'                       => 'required|array|min:1',
+            'schedules.*.maintenance_type_id' => 'required|exists:maintenance_types,id',
+            'schedules.*.last_service_odo'    => 'required|integer|min:0',
+            'schedules.*.interval_km'         => 'required|integer|min:1',
+            'schedules.*.last_service_date'   => 'nullable|date',
         ]);
 
-        $validated['next_due_odo'] = $validated['last_service_odo'] + $validated['interval_km'];
+        foreach ($request->schedules as $sched) {
+            $exists = MaintenanceSchedule::where('vehicle_id', $request->vehicle_id)
+                ->where('maintenance_type_id', $sched['maintenance_type_id'])
+                ->exists();
 
-        MaintenanceSchedule::create($validated);
+            if ($exists) continue;
+
+            MaintenanceSchedule::create([
+                'vehicle_id'          => $request->vehicle_id,
+                'maintenance_type_id' => $sched['maintenance_type_id'],
+                'last_service_odo'    => $sched['last_service_odo'],
+                'last_service_date'   => $sched['last_service_date'] ?? null,
+                'interval_km'         => $sched['interval_km'],
+                'next_due_odo'        => $sched['last_service_odo'] + $sched['interval_km'],
+            ]);
+        }
 
         return redirect()->route('admin.schedules.index')
-            ->with('success', 'Maintenance schedule created.');
+            ->with('success', 'Maintenance schedule(s) created successfully.');
     }
-
     public function edit(MaintenanceSchedule $schedule)
     {
         $schedule->load(['vehicle', 'maintenanceType']);
