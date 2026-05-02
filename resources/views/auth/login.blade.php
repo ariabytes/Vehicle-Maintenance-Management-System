@@ -108,7 +108,7 @@
             <div class="mt-8 border border-gray-200 rounded-lg overflow-hidden">
                 <button onclick="document.getElementById('test-creds').classList.toggle('hidden')"
                         class="w-full flex items-center justify-between px-4 py-3 bg-gray-50 text-sm text-gray-600 hover:bg-gray-100 transition font-medium">
-                    <span>🔑 Try a test account</span>
+                    <span>🔑 Try a test account!</span>
                 </button>
                 <div id="test-creds" class="hidden px-4 py-4 bg-white border-t border-gray-100 space-y-3 text-sm">
                     <div class="bg-blue-50 border border-blue-200 rounded p-3">
