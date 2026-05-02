@@ -113,7 +113,7 @@
                 <div id="test-creds" class="hidden px-4 py-4 bg-white border-t border-gray-100 space-y-3 text-sm">
                     <div class="bg-blue-50 border border-blue-200 rounded p-3">
                         <p class="font-semibold text-blue-800 text-xs uppercase tracking-wide mb-2">Admin Account</p>
-                        <p class="text-gray-700">Email: <span class="font-mono text-blue-700">admin@vmms.test</span></p>
+                        <p class="text-gray-700">Email: <span class="font-mono text-blue-700">test@gmail.vmms</span></p>
                         <p class="text-gray-700">Password: <span class="font-mono text-blue-700">password</span></p>
                     </div>
                     <p class="text-xs text-gray-400 leading-relaxed">
