@@ -7,13 +7,7 @@ use Illuminate\Http\Request;
 
 class MaintenanceHistoryController extends Controller
 {
-    /**
-     * UC10 — Role-scoped maintenance history.
-     *
-     * Admin   → all vehicles
-     * Driver  → only their assigned vehicle(s)
-     * Mechanic→ only vehicles they've worked on
-     */
+
     public function index(Request $request)
     {
         $user  = auth()->user();
@@ -28,7 +22,15 @@ class MaintenanceHistoryController extends Controller
         }
 
         $query
-            ->when($request->vehicle_id, fn($q, $id) => $q->where('vehicle_id', $id))
+            ->when(
+                $request->plate_number,
+                fn($q, $plate) =>
+                $q->whereHas(
+                    'vehicle',
+                    fn($v) =>
+                    $v->where('plate_number', 'like', "%{$plate}%")
+                )
+            )
             ->when($request->from, fn($q, $d) => $q->whereDate('completed_at', '>=', $d))
             ->when($request->to,   fn($q, $d) => $q->whereDate('completed_at', '<=', $d));
 

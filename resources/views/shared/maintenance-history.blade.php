@@ -9,9 +9,9 @@
             {{-- Filters --}}
             <form method="GET" class="flex gap-3 flex-wrap">
                 @if(auth()->user()->isAdmin())
-                    <input type="number" name="vehicle_id" value="{{ request('vehicle_id') }}"
-                           placeholder="Vehicle ID..."
-                           class="border border-gray-300 rounded-md px-3 py-2 text-sm w-36 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <input type="text" name="plate_number" value="{{ request('plate_number') }}"
+                        placeholder="Search plate number..."
+                        class="border border-gray-300 rounded-md px-3 py-2 text-sm w-48 focus:outline-none focus:ring-1 focus:ring-blue-500">
                 @endif
                 <input type="date" name="from" value="{{ request('from') }}"
                        class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
